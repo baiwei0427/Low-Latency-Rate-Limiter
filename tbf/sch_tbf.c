@@ -276,6 +276,12 @@ static struct sk_buff *tbf_dequeue(struct Qdisc *sch)
                                 INET_ECN_set_ce(skb);
                         }
 
+                        /* check packet drops */
+                        __u32 drops = q->qdisc->qstats.drops;
+                        if (drops > 0) {
+                                printk(KERN_INFO "Packet drops %u\n", drops);
+                        }
+                        
 			return skb;
 		}
 
